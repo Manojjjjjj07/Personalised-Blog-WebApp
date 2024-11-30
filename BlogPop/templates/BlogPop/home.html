@@ -6,6 +6,10 @@
     <title>Blog Home!</title>
 </head>
 <body>
-    <h1>Blog Home !</h1>
+    {% for post in posts %}
+        <h1>{{post.Title}}</h1>
+        <p>Written By {{post.Author}} on {{post.Date_Posted}}</p>
+        <p>{{post.Content}}</p>
+    {% endfor %}
 </body>
 </html>
