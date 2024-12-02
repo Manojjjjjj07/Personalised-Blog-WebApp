@@ -22,4 +22,4 @@ def home(request):
     return render(request, 'BlogPop/home.html', context)
 
 def about(request):
-    return render(request, 'BlogPop/about.html',  {'title': 'About'})
+    return render(request, 'BlogPop/about.html',  {'title':'About'})
