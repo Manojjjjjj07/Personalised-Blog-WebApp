@@ -20,6 +20,7 @@ class PostListView(ListView):
     context_object_name = 'posts'
     ordering = ['-date_posted']
     paginate_by = 5
+    
 class UserPostListView(ListView):
     model = Post
     template_name = 'BlogPop/user_posts.html'  # <app>/<model>_<viewtype>.html
