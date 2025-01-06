@@ -19,13 +19,21 @@
                     <a href="{% url 'post-detail' post.id %}">Read More</a>
                 </p>
 
-                <!-- Optional: Add Featured Image -->
+                
                 {% if post.featured_image %}
                     <img class="img-fluid mt-3" 
                          src="{{ post.featured_image.url }}" 
                          alt="Featured Image">
                 {% endif %}
             </div>
+
+            <div class="post">
+              <div class="reactions">
+                  <button class="reaction-btn" onclick="react('{{ post.id }}', 'like')">👍({{ post.likes }})</button>
+                  <button class="reaction-btn" onclick="react('{{ post.id }}', 'love')">❤️({{ post.loves }})</button>
+                  <button class="reaction-btn" onclick="react('{{ post.id }}', 'clap')">👎({{ post.claps }})</button>
+              </div>
+          </div>
         </article>
     {% endfor %}
     {% if is_paginated %}

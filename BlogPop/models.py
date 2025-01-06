@@ -9,6 +9,10 @@ class Post(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    likes = models.PositiveIntegerField(default=0)
+    loves = models.PositiveIntegerField(default=0)
+    claps = models.PositiveIntegerField(default=0)
+
     def __str__(self):
         return self.title
 

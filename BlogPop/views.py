@@ -1,3 +1,5 @@
+from django.http import JsonResponse
+from .models import Post
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
@@ -9,6 +11,23 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Post
+
+def update_reaction(request, post_id, reaction_type):
+    post = get_object_or_404(Post, id=post_id)
+
+    if reaction_type == 'like':
+        post.likes += 1
+    elif reaction_type == 'love':
+        post.loves += 1
+    elif reaction_type == 'clap':
+        post.claps += 1
+    
+    post.save()
+    return JsonResponse({
+        'likes': post.likes,
+        'loves': post.loves,
+        'claps': post.claps,
+    })
 
 def home(request):
     context = {'posts': Post.objects.all()}
