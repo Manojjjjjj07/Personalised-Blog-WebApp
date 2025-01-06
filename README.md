@@ -1,2 +1,2 @@
 # Personalised Blog WebApp
- Creating a fully featured and dynmaic Web App for Active Blogging!
+ Developed a fully featured and dynamic Web App for Active Blogging!
