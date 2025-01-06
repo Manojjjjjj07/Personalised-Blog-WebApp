@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{% static 'BlogPop/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'BlogPop/dark-mode.css' %}">
 
     {% if title %}
         <title>BlogPop - {{ title }}</title>
@@ -17,6 +18,7 @@
     {% endif %}
 </head>
 <body>
+  <body class="{% if request.COOKIES.dark_mode == 'enabled' %}dark-mode{% endif %}"></body>
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
@@ -80,23 +82,16 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
     <script>
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        const body = document.body;
+      const darkModeToggle = document.getElementById('darkModeToggle');
+      const body = document.body;
 
-        if (localStorage.getItem('dark-mode') === 'enabled') {
-            body.classList.add('dark-mode');
-        }
-
-        darkModeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('dark-mode', 'enabled');
-            } else {
-                localStorage.removeItem('dark-mode');
-            }
-        });
-    </script>
+      darkModeToggle.addEventListener('click', () => {
+          const darkModeEnabled = body.classList.toggle('dark-mode');
+          document.cookie = `dark_mode=${darkModeEnabled ? 'enabled' : 'disabled'}; path=/`;
+      });
+  </script>
 
   </body>
 </html>

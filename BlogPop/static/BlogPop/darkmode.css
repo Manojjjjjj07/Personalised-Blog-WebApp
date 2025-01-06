@@ -1,0 +1,115 @@
+body.dark-mode {
+    background: #121212;
+    color: #e0e0e0;
+  }
+
+h1.dark-mode, h2.dark-mode, h3.dark-mode, h4.dark-mode, h5.dark-mode, h6.dark-mode {
+    color: #ffffff;
+  }
+
+.bg-steel.dark-mode {
+    background-color: #3a3a3a;
+  }
+
+.site-header .navbar-nav .nav-link.dark-mode {
+    color: #b0b0b0;
+  }
+
+.site-header .navbar-nav .nav-link.dark-mode:hover {
+    color: #ffffff;
+  }
+
+.site-header .navbar-nav .nav-link.active.dark-mode {
+    font-weight: 500;
+  }
+
+.content-section.dark-mode {
+    background: #1e1e1e;
+    border: 1px solid #333333;
+  }
+
+.article-title.dark-mode {
+    color: #cccccc;
+  }
+
+a.article-title.dark-mode:hover {
+    color: #80bfff;
+    text-decoration: none;
+  }
+
+.article-metadata.dark-mode {
+    border-bottom: 1px solid #444444;
+  }
+
+.article-metadata a.dark-mode:hover {
+    color: #e0e0e0;
+    text-decoration: none;
+  }
+
+.article-svg.dark-mode {
+    fill: #cccccc;
+  }
+
+.account-heading.dark-mode {
+    color: #ffffff;
+  }
+
+/* Added Styles */
+.post-card.dark-mode {
+    background-color: #1c1c1c;
+    border: 1px solid #333333;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+.post-card.dark-mode:hover {
+    background-color: #272727;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+.sidebar.dark-mode {
+    background-color: #1a1a1a;
+    border: 1px solid #333333;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    padding: 15px;
+  }
+
+.sidebar.dark-mode h3 {
+    color: #e0e0e0;
+    border-bottom: 2px solid #444444;
+    padding-bottom: 5px;
+  }
+
+.sidebar.dark-mode li {
+    margin: 5px 0;
+    color: #cfcfcf;
+  }
+
+.btn.dark-mode {
+    background-color: #444444;
+    border: 1px solid #555555;
+    color: #e0e0e0;
+  }
+
+.btn.dark-mode:hover {
+    background-color: #555555;
+    color: #ffffff;
+    border: 1px solid #777777;
+  }
+
+.content-section.dark-mode {
+    padding: 20px;
+  }
+
+.post-card.dark-mode h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+
+.post-card.dark-mode p {
+    line-height: 1.6;
+    text-align: justify;
+  }

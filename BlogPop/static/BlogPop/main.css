@@ -1,12 +1,14 @@
 /* Light Mode (Default) */
 body {
-  background: #fafafa;
-  color: #333333;
+  background: #f4f4f9; /* Softer background for better readability */
+  color: #2d2d2d;
   margin-top: 5rem;
+  font-family: 'Roboto', Arial, sans-serif; /* Modern font for clean look */
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #444444;
+  color: #333333;
+  font-weight: 600; /* Slightly bold for headings */
 }
 
 ul {
@@ -14,63 +16,81 @@ ul {
 }
 
 .bg-steel {
-  background-color: #5f788a;
-}
-
-.site-header .navbar-nav .nav-link {
-  color: #cbd5db;
-}
-
-.site-header .navbar-nav .nav-link:hover {
+  background-color: #4a90e2; /* Calming blue */
   color: #ffffff;
 }
 
+.site-header .navbar-nav .nav-link {
+  color: #e4f0f6;
+  transition: color 0.3s ease; /* Smooth hover transition */
+}
+
+.site-header .navbar-nav .nav-link:hover {
+  color: #ffffff; /* Brighter white on hover */
+}
+
 .site-header .navbar-nav .nav-link.active {
-  font-weight: 500;
+  font-weight: 600;
+  border-bottom: 2px solid #ffffff; /* Underline for active link */
 }
 
 .content-section {
   background: #ffffff;
-  padding: 10px 20px;
-  border: 1px solid #dddddd;
-  border-radius: 3px;
+  padding: 20px;
+  border: 1px solid #eeeeee;
+  border-radius: 8px; /* Rounded corners */
   margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.content-section:hover {
+  transform: translateY(-5px); /* Subtle lift effect on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* More prominent shadow */
 }
 
 .article-title {
-  color: #444444;
+  color: #2a5d9f; /* Stronger blue for titles */
+  font-size: 1.5rem;
 }
 
 a.article-title:hover {
-  color: #428bca;
-  text-decoration: none;
+  color: #1a3e6e; /* Darker blue on hover */
+  text-decoration: underline; /* Underline for better UX */
 }
 
 .article-content {
   white-space: pre-line;
+  line-height: 1.6; /* Improved readability */
+  color: #4a4a4a;
 }
 
 .article-img {
   height: 60px;
   width: 60px;
   margin-right: 16px;
+  border-radius: 50%; /* Circular image */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 .article-metadata {
-  padding-bottom: 1px;
-  margin-bottom: 4px;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
   border-bottom: 1px solid #e3e3e3;
+  font-size: 0.9rem;
+  color: #737373;
 }
 
 .article-metadata a:hover {
-  color: #333;
-  text-decoration: none;
+  color: #2a5d9f;
+  text-decoration: underline;
 }
 
 .article-svg {
   width: 25px;
   height: 25px;
   vertical-align: middle;
+  fill: #4a90e2; /* Matches theme color */
 }
 
 .account-img {
@@ -78,65 +98,50 @@ a.article-title:hover {
   width: 125px;
   margin-right: 20px;
   margin-bottom: 16px;
+  border-radius: 50%; /* Circular image */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Depth effect */
 }
 
 .account-heading {
   font-size: 2.5rem;
+  font-weight: 700;
+  color: #2d2d2d;
+  margin-bottom: 20px;
 }
 
-/* Dark Mode Styles */
-body.dark-mode {
-  background: #121212;
-  color: #e0e0e0;
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
-h1.dark-mode, h2.dark-mode, h3.dark-mode, h4.dark-mode, h5.dark-mode, h6.dark-mode {
-  color: #ffffff;
-}
-
-.bg-steel.dark-mode {
-  background-color: #3a3a3a;
-}
-
-.site-header .navbar-nav .nav-link.dark-mode {
-  color: #b0b0b0;
-}
-
-.site-header .navbar-nav .nav-link.dark-mode:hover {
-  color: #ffffff;
-}
-
-.site-header .navbar-nav .nav-link.active.dark-mode {
-  font-weight: 500;
-}
-
-.content-section.dark-mode {
-  background: #1e1e1e;
-  border: 1px solid #333333;
-}
-
-.article-title.dark-mode {
-  color: #cccccc;
-}
-
-a.article-title.dark-mode:hover {
-  color: #80bfff;
+.pagination a {
+  color: #4a90e2;
+  border: 1px solid #cccccc;
+  padding: 8px 12px;
+  margin: 0 5px;
   text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s ease;
 }
 
-.article-metadata.dark-mode {
-  border-bottom: 1px solid #444444;
-}
-
-.article-metadata a.dark-mode:hover {
-  color: #e0e0e0;
-  text-decoration: none;
-}
-
-.article-svg.dark-mode {
-  fill: #cccccc;
-}
-
-.account-heading.dark-mode {
+.pagination a:hover {
+  background-color: #4a90e2;
   color: #ffffff;
+  border-color: #4a90e2;
 }
+
+button {
+  background-color: #4a90e2;
+  color: #ffffff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #3a76c2;
+}
+
