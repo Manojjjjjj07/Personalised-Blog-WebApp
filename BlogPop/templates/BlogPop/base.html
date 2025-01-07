@@ -34,18 +34,19 @@
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               {% if user.is_authenticated %}
-                <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
+                <a class="btn btn-outline-light ml-3" href="{% url 'post-create' %}">New Post</a>
+                <button class="btn btn-outline-light ml-3">Search Posts</button>
                 <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                 <form action="{% url 'logout' %}" method="post" class="d-inline">
                   {% csrf_token %}
-                  <button type="submit" class="btn btn-outline-light">Logout</button>
+                  <button type="submit" class="nav-item nav-link">Logout</button>
                 </form>
               {% else %}
                 <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                 <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
               {% endif %}
               <!-- Dark Mode Toggle Button -->
-              <button id="darkModeToggle" class="btn btn-outline-light ml-3">Dark Mode</button>
+              
             </div>
           </div>
         </div>
@@ -67,12 +68,12 @@
           <div class="content-section">
             <h3>Latest News and Posts</h3>
             <p class='text-muted'>Happy New Year 2025!
-              <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Popular Posts</li>
-                <li class="list-group-item list-group-item-light">Search Posts</li>
-                <li class="list-group-item list-group-item-light">Donate</li>
-                <li class="list-group-item list-group-item-light">Rate my WebApp</li>
-              </ul>
+              <div class="list-group">
+                <a href="{% url 'popular-posts' %}" class="list-group-item list-group-item-action">Popular Posts</a>
+                <a href="#" class="list-group-item list-group-item-action">Search Posts</a>
+                <a href="#" class="list-group-item list-group-item-action">Donate</a>
+                <a href="#" class="list-group-item list-group-item-action">Rate my WebApp</a>
+            </div>
             </p>
           </div>
         </div>
@@ -82,7 +83,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="{% static 'BlogPop/main.js' %}"></script>
+    <script src="{% static 'BlogPop/main.js' %}?v=1.1"></script>
 
     <script>
       const darkModeToggle = document.getElementById('darkModeToggle');

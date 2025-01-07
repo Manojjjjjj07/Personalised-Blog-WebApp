@@ -1,0 +1,46 @@
+{% extends "BlogPop/base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1>Popular Posts</h1>
+        <hr>
+        {% for post in posts %}
+        <article class="media content-section">
+            <img class="rounded-circle article-img" 
+                 src="{{ post.author.profile.image.url }}" 
+                 alt="Profile Picture">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+                    <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                </div>
+                
+                <h2>
+                    <a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a>
+                </h2>
+
+                <p class="article-content">
+                    {{ post.content|truncatewords:75 }}
+                    <a href="{% url 'post-detail' post.id %}">Read More</a>
+                </p>
+            <p class="reactions">
+                <span>🔥 {{ post.popularity }}</span>
+            </p>
+            {% if post.featured_image %}
+            <img class="img-fluid mt-3" 
+                 src="{{ post.featured_image.url }}" 
+                 alt="Featured Image">
+            {% endif %}
+            </div>
+
+            
+        </article>
+        {% endfor %}
+
+
+        {% if not posts %}
+            <p>No popular posts found.</p>
+        {% endif %}
+    </div>
+{% endblock %}
+

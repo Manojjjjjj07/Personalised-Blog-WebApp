@@ -3,30 +3,50 @@ function react(postId, reactionType) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken') 
+            'X-CSRFToken': getCookie('csrftoken') // Add CSRF token to headers
         }
     })
-    .then(response => response.json()) // Parse the JSON response
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Parse the JSON response
+    })
     .then(data => {
         // Check if an error exists in the response
         if (data.error) {
             alert(data.error); // Display error message to the user
         } else {
             // Dynamically update the reaction counts on the page
-            document.querySelector(`button[onclick="react('${postId}', 'like')"]`).innerHTML = `👍 Like (${data.reaction_count.like || 0})`;
-            document.querySelector(`button[onclick="react('${postId}', 'love')"]`).innerHTML = `❤️ Love (${data.reaction_count.love || 0})`;
-            document.querySelector(`button[onclick="react('${postId}', 'clap')"]`).innerHTML = `👏 Clap (${data.reaction_count.clap || 0})`;
+            updateReactionCounts(postId, data.reaction_count);
         }
     })
+    
 }
 
+function updateReactionCounts(postId, reactionCounts) {
+    const likeButton = document.querySelector(`button[onclick="react('${postId}', 'like')"]`);
+    const loveButton = document.querySelector(`button[onclick="react('${postId}', 'love')"]`);
+    const clapButton = document.querySelector(`button[onclick="react('${postId}', 'clap')"]`);
+
+    if (likeButton) {
+        likeButton.innerHTML = `👍 Like (${reactionCounts.like || 0})`;
+    }
+    if (loveButton) {
+        loveButton.innerHTML = `❤️ Love (${reactionCounts.love || 0})`;
+    }
+    if (clapButton) {
+        clapButton.innerHTML = `👏 Clap (${reactionCounts.clap || 0})`;
+    }
+}
+
+// Helper function to retrieve the CSRF token from cookies
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
         const cookies = document.cookie.split(';');
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
-            // Check if this cookie matches the requested name
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;

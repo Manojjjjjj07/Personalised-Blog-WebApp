@@ -185,11 +185,13 @@ button:hover {
   font-size: 14px;
   display: flex;
   align-items: center;
+  color: #2d2d2d;
 }
 
 .reaction-btn:hover {
   background-color: #716d6d;
   border-color: #ccc;
+  color: floralwhite;
 }
 
 .reaction-btn:active {

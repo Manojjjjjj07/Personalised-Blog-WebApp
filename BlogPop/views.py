@@ -1,5 +1,8 @@
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Count, Q
+from django.db.models import F, Func, Value, IntegerField
+from django.db.models.functions import Cast
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.views.generic import (
@@ -89,6 +92,16 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         post = self.get_object()
         return self.request.user == post.author
 
+def popular_posts(request):
+    posts = Post.objects.annotate(
+        likes=Count('reactions', filter=Q(reactions__reaction_type='like')),
+        loves=Count('reactions', filter=Q(reactions__reaction_type='love')),
+        claps=Count('reactions', filter=Q(reactions__reaction_type='clap')),
+    ).annotate(
+        popularity=F('likes') + F('loves') + F('claps')  # Calculate popularity
+    ).order_by('-popularity')
+
+    return render(request, 'BlogPop/popular_posts.html', {'posts': posts})
 
 def about(request):
     return render(request, 'BlogPop/about.html', {'title': 'About'})
