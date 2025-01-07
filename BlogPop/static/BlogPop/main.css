@@ -188,7 +188,7 @@ button:hover {
 }
 
 .reaction-btn:hover {
-  background-color: #e0e0e0;
+  background-color: #716d6d;
   border-color: #ccc;
 }
 
@@ -205,6 +205,8 @@ button:hover {
   .reaction-btn {
       padding: 5px;
       font-size: 12px;
+      text-transform: #111111;
+
   }
 }
 

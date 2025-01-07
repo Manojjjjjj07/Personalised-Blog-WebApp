@@ -1,5 +1,4 @@
 from django.http import JsonResponse
-from .models import Post
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
@@ -8,26 +7,35 @@ from django.views.generic import (
     DetailView,
     CreateView,
     UpdateView,
-    DeleteView
+    DeleteView,
 )
-from .models import Post
+from .models import Post, Reaction
 
 def update_reaction(request, post_id, reaction_type):
-    post = get_object_or_404(Post, id=post_id)
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'You must be logged in to react.'}, status=403)
 
-    if reaction_type == 'like':
-        post.likes += 1
-    elif reaction_type == 'love':
-        post.loves += 1
-    elif reaction_type == 'clap':
-        post.claps += 1
-    
-    post.save()
-    return JsonResponse({
-        'likes': post.likes,
-        'loves': post.loves,
-        'claps': post.claps,
-    })
+    post = get_object_or_404(Post, id=post_id)
+    user = request.user
+    existing_reaction = Reaction.objects.filter(post=post, user=user).first()
+
+    if existing_reaction:
+        if existing_reaction.reaction_type == reaction_type:
+            existing_reaction.delete()
+        else:
+            existing_reaction.reaction_type = reaction_type
+            existing_reaction.save()
+    else:
+        Reaction.objects.create(post=post, user=user, reaction_type=reaction_type)
+
+    reaction_count = {
+        'likes': Reaction.objects.filter(post=post, reaction_type='like').count(),
+        'loves': Reaction.objects.filter(post=post, reaction_type='love').count(),
+        'claps': Reaction.objects.filter(post=post, reaction_type='clap').count(),
+    }
+
+    return JsonResponse(reaction_count)
+
 
 def home(request):
     context = {'posts': Post.objects.all()}
@@ -39,7 +47,7 @@ class PostListView(ListView):
     context_object_name = 'posts'
     ordering = ['-date_posted']
     paginate_by = 5
-    
+
 class UserPostListView(ListView):
     model = Post
     template_name = 'BlogPop/user_posts.html'  # <app>/<model>_<viewtype>.html
@@ -49,10 +57,9 @@ class UserPostListView(ListView):
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return Post.objects.filter(author=user).order_by('-date_posted')
-    
+
 class PostDetailView(DetailView):
     model = Post
-
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
@@ -61,7 +68,6 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
-
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
@@ -73,10 +79,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         post = self.get_object()
-        if self.request.user == post.author:
-            return True
-        return False
-
+        return self.request.user == post.author
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
@@ -84,9 +87,8 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         post = self.get_object()
-        if self.request.user == post.author:
-            return True
-        return False
+        return self.request.user == post.author
+
 
 def about(request):
-    return render(request, 'BlogPop/about.html',  {'title':'About'})
+    return render(request, 'BlogPop/about.html', {'title': 'About'})

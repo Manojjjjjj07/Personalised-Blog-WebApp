@@ -10,6 +10,7 @@
                     <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
                     <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
                 </div>
+                
                 <h2>
                     <a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a>
                 </h2>
@@ -19,6 +20,20 @@
                     <a href="{% url 'post-detail' post.id %}">Read More</a>
                 </p>
 
+                <div class="post-reactions">
+                  {% with post.get_reaction_counts as counts %}
+                  <button class="reaction-btn" onclick="react('{{ post.id }}', 'like')">
+                      👍 Like ({{ counts.likes }})
+                  </button>
+                  <button class="reaction-btn" onclick="react('{{ post.id }}', 'love')">
+                      ❤️ Love ({{ counts.loves }})
+                  </button>
+                  <button class="reaction-btn" onclick="react('{{ post.id }}', 'clap')">
+                      👎 Dislike ({{ counts.claps }})
+                  </button>
+                  {% endwith %}
+              </div>
+
                 
                 {% if post.featured_image %}
                     <img class="img-fluid mt-3" 
@@ -27,13 +42,7 @@
                 {% endif %}
             </div>
 
-            <div class="post">
-              <div class="reactions">
-                  <button class="reaction-btn" onclick="react('{{ post.id }}', 'like')">👍({{ post.likes }})</button>
-                  <button class="reaction-btn" onclick="react('{{ post.id }}', 'love')">❤️({{ post.loves }})</button>
-                  <button class="reaction-btn" onclick="react('{{ post.id }}', 'clap')">👎({{ post.claps }})</button>
-              </div>
-          </div>
+            
         </article>
     {% endfor %}
     {% if is_paginated %}
