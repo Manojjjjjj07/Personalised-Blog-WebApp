@@ -21,7 +21,7 @@ function react(postId, reactionType) {
             updateReactionCounts(postId, data.reaction_count);
         }
     })
-    
+    .catch(error => console.error('Error:', error));
 }
 
 function updateReactionCounts(postId, reactionCounts) {
@@ -55,3 +55,48 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+
+function toggleSearchBar() {
+    const searchBar = document.getElementById('search-bar');
+    if (searchBar.style.display === 'none') {
+        searchBar.style.display = 'block';
+    } else {
+        searchBar.style.display = 'none';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const searchButton = document.getElementById('search-btn');
+    if (searchButton) {
+        searchButton.addEventListener('click', searchPosts);
+    }
+});
+
+function searchPosts() {
+    const query = document.getElementById('search-input').value;
+    fetch(`/search-posts/?q=${encodeURIComponent(query)}`)
+        .then((response) => response.json())
+        .then((data) => {
+            const postsContainer = document.getElementById('posts-container');
+            postsContainer.innerHTML = ''; // Clear old search results
+
+            if (data.results.length > 0) {
+                data.results.forEach((post) => {
+                    const postElement = document.createElement('div');
+                    postElement.innerHTML = `
+                        <h3><a href="${post.url}">${post.title}</a></h3>
+                        <p>${post.highlighted_content}</p>
+                        <p><small>${post.date_posted} by ${post.author.username}</small></p>
+                    `;
+                    postsContainer.appendChild(postElement);
+                });
+            } else {
+                postsContainer.innerHTML = '<p>No posts found.</p>';
+            }
+        })
+        .catch((error) => {
+            console.error('Error fetching search results:', error);
+        });
+}
+

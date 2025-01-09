@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <script src="https://kit.fontawesome.com/488f9e2727.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'BlogPop/main.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'BlogPop/dark-mode.css' %}">
 
@@ -35,7 +35,7 @@
             <div class="navbar-nav">
               {% if user.is_authenticated %}
                 <a class="btn btn-outline-light ml-3" href="{% url 'post-create' %}">New Post</a>
-                <button class="btn btn-outline-light ml-3">Search Posts</button>
+                <a class="btn btn-outline-light ml-3" href="{% url 'search-posts' %}">Search Posts</a>
                 <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                 <form action="{% url 'logout' %}" method="post" class="d-inline">
                   {% csrf_token %}
@@ -70,7 +70,7 @@
             <p class='text-muted'>Happy New Year 2025!
               <div class="list-group">
                 <a href="{% url 'popular-posts' %}" class="list-group-item list-group-item-action">Popular Posts</a>
-                <a href="#" class="list-group-item list-group-item-action">Search Posts</a>
+                <a href="{% url 'search-posts' %}" class="list-group-item list-group-item-action">Search Posts</a>
                 <a href="#" class="list-group-item list-group-item-action">Donate</a>
                 <a href="#" class="list-group-item list-group-item-action">Rate my WebApp</a>
             </div>

@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Count, Q
+from django.utils.html import mark_safe
 from django.db.models import F, Func, Value, IntegerField
 from django.db.models.functions import Cast
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -13,6 +14,15 @@ from django.views.generic import (
     DeleteView,
 )
 from .models import Post, Reaction
+
+def search_posts(request):
+    query = request.GET.get('q')
+    results = Post.objects.filter(title__icontains=query) if query else None
+    context = {
+        'query': query,
+        'results': results
+    }
+    return render(request, 'BlogPop/search_posts.html', context)
 
 def update_reaction(request, post_id, reaction_type):
     if not request.user.is_authenticated:

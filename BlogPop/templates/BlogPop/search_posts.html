@@ -1,0 +1,41 @@
+{% extends "BlogPop/base.html" %}
+
+{% block content %}
+<div class="content-section">
+    <h2>Search Posts</h2>
+    <p>Type in a keyword to find posts:</p>
+    <form method="get" action="{% url 'search-posts' %}">
+        <div class="form-group">
+            <input
+                type="text"
+                name="q"
+                class="form-control"
+                placeholder="Search for posts..."
+                required
+            />
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+
+{% if query %}
+    <h3>Search Results for "{{ query }}":</h3>
+    {% if results %}
+        {% for post in results %}
+        
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                    </h5>
+                    <p class="card-text">{{ post.content|slice:":150" }}...</p>
+                    <p class="text-muted">Posted by {{ post.author }} on {{ post.date_posted }}</p>
+                </div>
+                
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+{% endif %}
+{% endblock content %}
