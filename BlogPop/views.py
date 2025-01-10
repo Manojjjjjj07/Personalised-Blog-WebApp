@@ -49,6 +49,16 @@ def update_reaction(request, post_id, reaction_type):
 
     return JsonResponse(reaction_count)
 
+def donate(request):
+    return render(request, 'BlogPop/donate.html')
+
+def feedback(request):
+    if request.method == "POST":
+        rating = request.POST.get('rating')
+        feedback_text = request.POST.get('feedback')
+        return render(request, 'BlogPop/feedback.html', {'success': True})
+
+    return render(request, 'BlogPop/feedback.html')
 
 def home(request):
     context = {'posts': Post.objects.all()}
